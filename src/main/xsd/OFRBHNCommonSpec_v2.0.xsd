@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   elementFormDefault="qualified">
+	<xs:element name="ordercentral">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" ref="fulfillmentreq" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fulfillmentreq">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="header" />
+				<xs:element ref="orders" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="header">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="date" />
+				<xs:element ref="batchnumber" />
+				<xs:element ref="ordercount" />
+				<xs:element ref="ofrspecversion" />
+				<xs:element ref="ofrid" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="batchnumber" type="xs:long" />
+	<xs:element name="ordercount" type="xs:long" />
+	<xs:element name="ofrspecversion" type="xs:string" />
+	<xs:element name="ofrid" type="xs:string" />
+	<xs:element name="orders">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="order" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="order">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="id" />
+				<xs:element ref="fulfillmentorderid" />
+				<xs:element ref="bhnordertype" />
+				<xs:element ref="packagingtype" />
+				<xs:element minOccurs="0" ref="date" />
+				<xs:element minOccurs="0" ref="mid" />
+				<xs:element minOccurs="0" ref="partnerordernumber" />
+				<xs:element minOccurs="0" ref="partnerorderdate" />
+				<xs:element minOccurs="0" ref="partnerponumber" />
+				<xs:element minOccurs="0" ref="partnercustomernumber" />
+				<xs:element minOccurs="0" ref="billing" />
+				<xs:element minOccurs="0" ref="supplementals" />
+				<xs:element minOccurs="0" ref="partnerPersonIdentifyingNumber" />
+				<xs:element ref="items" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="mid" type="xs:string" />
+	<xs:element name="partnerordernumber" type="xs:string" />
+	<xs:element name="partnerorderdate">
+		<xs:annotation>
+			<xs:documentation>order date - format (YYYY-MM-DDThh:mm:ss.sTZD)
+			</xs:documentation>
+			<xs:documentation>ISO 8601 format</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:dateTime">
+				<xs:pattern value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="partnerponumber" type="xs:string" />
+	<xs:element name="partnercustomernumber" type="xs:string" />
+	<xs:element name="items">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="1" maxOccurs="unbounded" ref="item" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="item">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="id" />
+				<xs:element ref="lineitemid" />
+				<xs:element minOccurs="0" name="packagingsequencenumber"
+							type="xs:int" />
+				<xs:element minOccurs="0" name="bundleid" type="xs:string" />
+				<xs:element minOccurs="0" ref="partnersku" />
+				<xs:element minOccurs="0" name="product" type="product" />
+				<xs:element minOccurs="0" ref="supplementals" />
+				<xs:element minOccurs="0" ref="cardimageurlfront" />
+				<xs:element minOccurs="0" ref="cards" />
+				<xs:element minOccurs="0" name="fulfillmentinstructions"
+							type="fulfillmentinstructions" />
+				<xs:element minOccurs="0" name="clientprogramid" type="xs:string" />
+				<xs:element ref="imageurls" minOccurs='0'/>
+				<xs:element ref="additionalinfos" minOccurs='0'/>
+				<xs:element minOccurs="0" ref="expeditefulfillment" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="partnersku" type="xs:string" />
+	<xs:element name="cardimageurlfront" type="xs:string" />
+	<xs:element name="expeditefulfillment" type="xs:boolean" />
+	<xs:element name="supplementals">
+		<xs:complexType>
+			<xs:all>
+				<xs:element minOccurs="0" ref="pinmailer" />
+				<xs:element minOccurs="0" ref="actmailer" />
+				<xs:element minOccurs="0" ref="packaging" />
+				<xs:element minOccurs="0" ref="shipping" />
+				<xs:element minOccurs="0" ref="returns" />
+				<xs:element minOccurs="0" ref="register" />
+				<xs:element minOccurs="0" ref="otherinfo" />
+				<xs:element minOccurs="0" ref="bominfo" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="partnerPersonIdentifyingNumber" type="xs:string" />
+	<xs:element name="pinmailer">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="issend" />
+				<xs:element minOccurs="0" ref="lag" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="actmailer">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="issend" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="issend" type="xs:boolean" />
+	<xs:element name="lag" type="xs:string" />
+	<xs:element name="packaging">
+		<xs:complexType>
+			<xs:all>
+				<xs:element minOccurs="0" name="packagingproduct" type="product" />
+				<xs:element minOccurs="0" name="slip" type="pslip" />
+				<xs:element minOccurs="0" ref="inserts" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="productname" type="xs:string" />
+	<xs:element name="productdescription" type="xs:string" />
+	<xs:element default="1" name="quantity" type="xs:long" />
+	<xs:element name="denomination" type="xs:string" />
+	<xs:element name="billing">
+		<xs:complexType>
+			<xs:all>
+				<xs:element minOccurs="0" name="billingaddress" type="address" >
+					<xs:annotation>
+						<xs:documentation>
+							OPTIONAL : Include all address fields in CDATA section
+						</xs:documentation>
+						<xs:documentation>Address</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="0" name="billingsenderid" type="addressid" />
+				<xs:element minOccurs="0" name="poboxflag" type="poboxflag" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="shipping">
+		<xs:complexType>
+			<xs:all>
+				<xs:element minOccurs="0" ref="method" />
+				<xs:element minOccurs="0" ref="shipperid" />
+				<xs:element minOccurs="0" ref="accountnumber" />
+				<xs:element minOccurs="0" name="shippingaddress" type="address" >
+					<xs:annotation>
+						<xs:documentation>
+							OPTIONAL : Include all address fields in CDATA section
+						</xs:documentation>
+						<xs:documentation>Address</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="0" name="shippingrecipientid"
+							type="addressid" />
+				<xs:element minOccurs="0" name="poboxflag" type="poboxflag" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="method" type="xs:string" />
+	<xs:element name="shipperid" type="xs:string" />
+	<xs:simpleType name="addressid">
+		<xs:annotation>
+			<xs:documentation>
+				CONDITIONAL : To replace Address with addressId
+			</xs:documentation>
+			<xs:documentation>Address Id to replace Address</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="poboxflag">
+		<xs:annotation>
+			<xs:documentation>
+				OPTIONAL : Boolean value for presenting pobox.
+			</xs:documentation>
+			<xs:documentation>PO Box flag</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="fulfillmentinstructions">
+		<xs:annotation>
+			<xs:documentation>
+				OPTIONAL : Include the content in CDATA section and
+				its Base64 encoded.
+			</xs:documentation>
+			<xs:documentation>Fulfillment Instruction Info</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:element name="accountnumber" type="xs:string" />
+	<xs:element name="returns">
+		<xs:complexType>
+			<xs:all>
+				<xs:element minOccurs="0" name="returnsaddress" type="address" />
+				<xs:element minOccurs="0" name="returnsenderid" type="addressid" />
+				<xs:element minOccurs="0" name="poboxflag" type="poboxflag" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="register">
+		<xs:complexType>
+			<xs:all>
+				<xs:element minOccurs="0" name="registeraddress" type="address" >
+					<xs:annotation>
+						<xs:documentation>
+							OPTIONAL : Include all address fields in CDATA section
+						</xs:documentation>
+						<xs:documentation>Address</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="0" name="registerrecipientid"
+							type="addressid" />
+				<xs:element minOccurs="0" name="poboxflag" type="poboxflag" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="bominfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" name="bomid" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="otherinfo">
+		<xs:annotation>
+			<xs:documentation>
+				OPTIONAL : Include all information fields in CDATA section
+			</xs:documentation>
+			<xs:documentation>OtherInfo</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" name="info1" type="xs:string" />
+				<xs:element minOccurs="0" name="info2" type="xs:string" />
+				<xs:element minOccurs="0" name="info3" type="xs:string" />
+				<xs:element minOccurs="0" name="info4" type="xs:string" />
+				<xs:element minOccurs="0" name="info5" type="xs:string" />
+				<xs:element minOccurs="0" name="info6" type="xs:string" />
+				<xs:element minOccurs="0" name="info7" type="xs:string" />
+				<xs:element minOccurs="0" name="info8" type="xs:string" />
+				<xs:element minOccurs="0" name="info9" type="xs:string" />
+				<xs:element minOccurs="0" name="info10" type="xs:string" />
+				<xs:element minOccurs="0" name="info11" type="xs:string" />
+				<xs:element minOccurs="0" name="info12" type="xs:string" />
+				<xs:element minOccurs="0" name="info13" type="xs:string" />
+				<xs:element minOccurs="0" name="info14" type="xs:string" />
+				<xs:element minOccurs="0" name="info15" type="xs:string" />
+				<xs:element minOccurs="0" name="info16" type="xs:string" />
+				<xs:element minOccurs="0" name="info17" type="xs:string" />
+				<xs:element minOccurs="0" name="info18" type="xs:string" />
+				<xs:element minOccurs="0" name="info19" type="xs:string" />
+				<xs:element minOccurs="0" name="info20" type="xs:string" />
+				<xs:element minOccurs="0" name="info21" type="xs:string" />
+				<xs:element minOccurs="0" name="info22" type="xs:string" />
+				<xs:element minOccurs="0" name="info23" type="xs:string" />
+				<xs:element minOccurs="0" name="info24" type="xs:string" />
+				<xs:element minOccurs="0" name="info25" type="xs:string" />
+				<xs:element minOccurs="0" name="info26" type="xs:string" />
+				<xs:element minOccurs="0" name="info27" type="xs:string" />
+				<xs:element minOccurs="0" name="info28" type="xs:string" />
+				<xs:element minOccurs="0" name="info29" type="xs:string" />
+				<xs:element minOccurs="0" name="info30" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="cards">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" ref="card" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="card">
+		<xs:complexType>
+			<xs:all>
+				<xs:element minOccurs="0" ref="id" />
+				<xs:element minOccurs="0" ref="seqnumber" />
+				<xs:element minOccurs="0" ref="cardrefnumber" />
+				<xs:element ref="cardtype" />
+				<xs:element ref="printtype" />
+				<xs:element ref="cardissuetype" />
+				<xs:element minOccurs="0" ref="activationcode" />
+				<xs:element minOccurs="0" ref="partnertrackingkey" />
+				<xs:element minOccurs="0" name="activateonshipment" type="xs:boolean" />
+				<xs:element minOccurs="0" name="product" type="product" />
+				<xs:element minOccurs="0" ref="supplementals" />
+				<xs:element minOccurs="0" ref="openloop" />
+				<xs:element minOccurs="0" ref="closedloop" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="openloop">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="pan" />
+				<xs:element minOccurs="0" ref="proxy" />
+				<xs:element minOccurs="0" ref="paymentnetwork" />
+				<xs:element minOccurs="0" ref="maskcardnumber" />
+				<xs:element minOccurs="0" ref="reloaditchitnumber" />
+				<xs:element minOccurs="0" name="embossline1">
+					<xs:annotation>
+						<xs:documentation>ALL UPPERCASE</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="embosscardline">
+							<xs:minLength value="0" />
+							<xs:maxLength value="26" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element minOccurs="0" name="embossline2">
+					<xs:annotation>
+						<xs:documentation>ALL UPPERCASE</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="embosscardline">
+							<xs:minLength value="0" />
+							<xs:maxLength value="26" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element minOccurs="0" name="embossline3">
+					<xs:annotation>
+						<xs:documentation>ALL UPPERCASE</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="embosscardline">
+							<xs:minLength value="0" />
+							<xs:maxLength value="26" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element minOccurs="0" name="embossline4">
+					<xs:annotation>
+						<xs:documentation>ALL UPPERCASE</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="embosscardline">
+							<xs:minLength value="0" />
+							<xs:maxLength value="26" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element minOccurs="0" name="embossline5">
+					<xs:annotation>
+						<xs:documentation>ALL UPPERCASE</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="embosscardline">
+							<xs:minLength value="0" />
+							<xs:maxLength value="26" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element minOccurs="0" name="embossline6">
+					<xs:annotation>
+						<xs:documentation>ALL UPPERCASE</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="embosscardline">
+							<xs:minLength value="0" />
+							<xs:maxLength value="26" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element minOccurs="0" name="indentdata">
+					<xs:annotation>
+						<xs:documentation>Confirm max length ???</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="indentdata">
+							<xs:minLength value="0" />
+							<xs:maxLength value="26" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element minOccurs="0" ref="barcode" />
+				<xs:element minOccurs="0" ref="track1" />
+				<xs:element minOccurs="0" ref="track2" />
+				<xs:element minOccurs="0" ref="track3" />
+				<xs:element minOccurs="0" ref="carriertrack1" />
+				<xs:element minOccurs="0" ref="carriertrack2" />
+				<xs:element minOccurs="0" ref="cardholdername">
+					<xs:annotation>
+						<xs:documentation>2-26 characters: All Upper Case
+							Surname(s) (separated by space if necessary).
+							Surname separator: /
+							First name(s) or initial(s) (separated by space if necessary).
+							Period (when followed by title).
+							Title (when used).
+							e.g. SINGH/ATUL.MR
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="0" ref="issuedate">
+					<xs:annotation>
+						<xs:documentation>Format - YYMM</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="0" ref="expirydate">
+					<xs:annotation>
+						<xs:documentation>Format - YYMM</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="0" ref="servicecode" />
+				<xs:element minOccurs="0" ref="pvvoffset">
+					<xs:annotation>
+						<xs:documentation>e.g. 50, 50.17, 200</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="0" ref="pinoffset">
+					<xs:annotation>
+						<xs:documentation>e.g. 5000, 5017, 2000</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="0" name="ddtrack1" type="dd" />
+				<xs:element minOccurs="0" name="ddtrack2" type="dd" />
+				<xs:element minOccurs="0" name="isgeneratecvv1" type="xs:boolean" />
+				<xs:element minOccurs="0" name="cvv1" type="xs:string" />
+				<xs:element minOccurs="0" name="isgeneratecvv2" type="xs:boolean" />
+				<xs:element minOccurs="0" name="cvv2" type="xs:string" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="closedloop">
+		<xs:complexType>
+			<xs:all>
+				<xs:element minOccurs="0" ref="activationcardnumber" />
+				<xs:element minOccurs="0" ref="redemptioncardnumber" />
+				<xs:element minOccurs="0" ref="maskcardnumber" />
+				<xs:element minOccurs="0" ref="barcode" />
+				<xs:element minOccurs="0" ref="scratchpin" />
+				<xs:element minOccurs="0" ref="version" />
+				<xs:element minOccurs="0" ref="track1" />
+				<xs:element minOccurs="0" ref="track2" />
+				<xs:element minOccurs="0" ref="track3" />
+				<xs:element minOccurs="0" ref="carriertrack1" />
+				<xs:element minOccurs="0" ref="carriertrack2" />
+				<xs:element minOccurs="0" ref="cardholdername" />
+				<xs:element minOccurs="0" ref="issuedate">
+					<xs:annotation>
+						<xs:documentation>Format YYMM</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element minOccurs="0" ref="expirydate">
+					<xs:annotation>
+						<xs:documentation>Format - YYMM</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="seqnumber" type="xs:long" />
+	<xs:element name="cardrefnumber" type="xs:string" />
+	<xs:element name="partnertrackingkey" type="xs:string" />
+	<xs:element name="cardholdername" type="xs:string" />
+	<xs:simpleType name="embosscardline">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="indentdata">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="dd">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:element name="pvvoffset" type="xs:string" />
+	<xs:element name="pinoffset" type="xs:string" />
+	<xs:element name="proxy" type="xs:string" />
+	<xs:element name="pan" type="xs:string" />
+	<xs:element name="activationcardnumber" type="xs:string" />
+	<xs:element name="redemptioncardnumber" type="xs:string" />
+	<xs:element name="activationcode" type="xs:string" />
+	<xs:element name="barcode" type="xs:string" />
+	<xs:element name="scratchpin" type="xs:string" />
+	<xs:element name="version" type="xs:string" />
+	<xs:element name="maskcardnumber" type="xs:string" />
+	<xs:element name="reloaditchitnumber" type="xs:string" />
+	<xs:element name="track1" type="xs:string" />
+	<xs:element name="track2" type="xs:string" />
+	<xs:element name="track3" type="xs:string" />
+	<xs:element name="carriertrack1" type="xs:string" />
+	<xs:element name="carriertrack2" type="xs:string" />
+	<xs:element name="issuedate" type="xs:string" />
+	<xs:element name="expirydate" type="xs:string" />
+	<xs:element name="servicecode">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:length value="3" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="date">
+		<xs:annotation>
+			<xs:documentation>order date - format (YYYY-MM-DDThh:mm:ss.sTZD)
+			</xs:documentation>
+			<xs:documentation>ISO 8601 format</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:dateTime">
+				<xs:pattern value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="templateid" type="xs:string" />
+	<xs:element name="bhniid" type="xs:string" />
+	<xs:element name="attnto" type="xs:string" />
+	<xs:element name="firstname" type="xs:string" />
+	<xs:element name="lastname" type="xs:string" />
+	<xs:element name="careof" type="xs:string" />
+	<xs:element name="companyname" type="xs:string" />
+	<xs:element name="addressline1" type="xs:string" />
+	<xs:element name="addressline2" type="xs:string" />
+	<xs:element name="addressline3" type="xs:string" />
+	<xs:element name="city" type="xs:string" />
+	<xs:element name="districtorcounty" type="xs:string" />
+	<xs:element name="state" type="xs:string" />
+	<xs:element name="postalcode" type="xs:string" />
+	<xs:element name="country" type="xs:string" />
+	<xs:element name="phone" type="xs:string" />
+	<xs:element name="contactemail" type="xs:string" />
+	<xs:element name="id" type="xs:string" />
+	<xs:element name="fulfillmentorderid" type="xs:string" />
+	<xs:element name="lineitemid" type="xs:string" />
+	<xs:element name="cardtype" type="cardtype" />
+	<xs:simpleType name="cardtype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CLOSED" />
+			<xs:enumeration value="OPEN" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="printtype" type="printtype" />
+	<xs:simpleType name="printtype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PRE-PRINTED" />
+			<xs:enumeration value="PRINT-ON-DEMAND" />
+			<xs:enumeration value="OTHER-MERCH" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="cardissuetype" type="cardissuetype" />
+	<xs:simpleType name="cardissuetype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NEW" />
+			<xs:enumeration value="REPLACE" />
+			<xs:enumeration value="REISSUE" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="paymentnetwork" type="paymentnetworktype" />
+	<xs:simpleType name="paymentnetworktype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VISA" />
+			<xs:enumeration value="MASTERCARD" />
+			<xs:enumeration value="DISCOVER" />
+			<xs:enumeration value="AMEX" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="bhnordertype" type="bhnordertype" />
+	<xs:simpleType name="bhnordertype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CUSTOMER" />
+			<xs:enumeration value="REPLACE" />
+			<xs:enumeration value="REISSUE" />
+			<xs:enumeration value="INV_REPLENISH" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="packagingtype" type="xs:string" />
+	<xs:element name="inserts">
+		<xs:annotation>
+			<xs:documentation>
+				OPTIONAL : Include to, from and message fields in CDATA section
+			</xs:documentation>
+			<xs:documentation>Inserts</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="1" maxOccurs="unbounded" ref="insert" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="insert">
+		<xs:complexType>
+			<xs:all>
+				<xs:element minOccurs="0" ref="id" />
+				<xs:element minOccurs="0" ref="inserttype" />
+				<xs:element minOccurs="0" ref="to" />
+				<xs:element minOccurs="0" ref="from" />
+				<xs:element minOccurs="0" ref="msg" />
+				<xs:element minOccurs="0" ref="occasion" />
+				<xs:element minOccurs="0" ref="csphonenumber" />
+				<xs:element minOccurs="0" ref="weburl" />
+				<xs:element minOccurs="0" ref="gcredemptioninfoline1" />
+				<xs:element minOccurs="0" ref="gcredemptioninfoline2" />
+				<xs:element minOccurs="0" ref="activationinstructions" />
+				<xs:element minOccurs="0" ref="termsandconditions" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="to" type="xs:string" />
+	<xs:element name="from" type="xs:string" />
+	<xs:element name="msg" type="xs:string" />
+	<xs:element name="occasion" type="xs:string" />
+	<xs:element name="csphonenumber" type="xs:string" />
+	<xs:element name="weburl" type="xs:string" />
+	<xs:element name="gcredemptioninfoline1" type="xs:string" />
+	<xs:element name="gcredemptioninfoline2" type="xs:string" />
+	<xs:element name="activationinstructions" type="xs:string" />
+	<xs:element name="termsandconditions" type="xs:string" />
+	<xs:element name="inserttype" type="xs:string" />
+	<xs:complexType name="pslip">
+		<xs:all>
+			<xs:element minOccurs="1" name="isrequired" type="xs:boolean" />
+			<xs:element minOccurs="0" ref="templateid" />
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="product">
+		<xs:all>
+			<xs:element minOccurs="1" ref="bhniid" />
+			<xs:element minOccurs="0" ref="quantity" />
+			<xs:element minOccurs="0" ref="denomination" />
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="address">
+		<xs:annotation>
+			<xs:documentation>
+				OPTIONAL : Include all address fields in CDATA section
+			</xs:documentation>
+			<xs:documentation>Address</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" ref="attnto" />
+			<xs:element minOccurs="0" ref="firstname" />
+			<xs:element minOccurs="0" ref="lastname" />
+			<xs:element minOccurs="0" ref="careof" />
+			<xs:element minOccurs="0" ref="companyname" />
+			<xs:element minOccurs="0" ref="addressline1" />
+			<xs:element minOccurs="0" ref="addressline2" />
+			<xs:element minOccurs="0" ref="addressline3" />
+			<xs:element minOccurs="0" ref="city" />
+			<xs:element minOccurs="0" ref="districtorcounty" />
+			<xs:element minOccurs="0" ref="state" />
+			<xs:element minOccurs="0" ref="postalcode" />
+			<xs:element minOccurs="0" ref="country" />
+			<xs:element minOccurs="0" ref="phone" />
+			<xs:element minOccurs="0" ref="contactemail" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="imageurls">
+		<xs:annotation>
+			<xs:documentation>Optional</xs:documentation>
+			<xs:documentation>Each orderlineitem can comprise multiple image urls. This
+				is a collection of image urls.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="imageurl" minOccurs='0' maxOccurs='unbounded'>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="name" type="xs:string" use="required"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="additionalinfos">
+		<xs:annotation>
+			<xs:documentation>Optional</xs:documentation>
+			<xs:documentation>Each orderlineitem can comprise multiple additionalinfo. This
+				is a collection of additionalinfos.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="additionalinfo" minOccurs='0' maxOccurs='unbounded'>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="name" type="xs:string" use="required"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
