@@ -16,6 +16,10 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Data;
+
 
 /**
  * <p>Java class for anonymous complex type.
@@ -54,6 +58,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 })
 @XmlRootElement(name = "order")
+@Document(collection = "fragment")
+@Data
 public class Order {
 
     @XmlElement(required = true)

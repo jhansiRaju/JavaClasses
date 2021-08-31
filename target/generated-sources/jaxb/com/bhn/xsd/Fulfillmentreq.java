@@ -14,6 +14,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Data;
+
 
 /**
  * <p>Java class for anonymous complex type.
@@ -41,6 +45,8 @@ import javax.xml.bind.annotation.XmlType;
     "orders"
 })
 @XmlRootElement(name = "fulfillmentreq")
+@Document(collection = "fragment")
+@Data
 public class Fulfillmentreq {
 
     @XmlElement(required = true)
